@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 public class TreeTap extends JFrame
@@ -15,7 +16,7 @@ public class TreeTap extends JFrame
 
 		// Configuration
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		setSize(900, 900);
+		setSize(900, 800);
 		setLocationByPlatform(true);
 		setLayout(new BorderLayout());
 
@@ -27,7 +28,9 @@ public class TreeTap extends JFrame
 	{
 		System.out.println("Hello World!");
 
-		TreeTap tt = new TreeTap();
-		tt.setVisible(true);
+		SwingUtilities.invokeLater(() -> {
+			TreeTap tt = new TreeTap();
+			tt.setVisible(true);
+		});
 	}
 }
