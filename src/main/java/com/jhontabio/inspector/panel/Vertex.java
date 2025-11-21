@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 
 public class Vertex extends JPanel
 {
+	private Color outline = Color.BLACK;
+
 	private String cmd;
 	private JLabel label;
 
@@ -44,7 +46,7 @@ public class Vertex extends JPanel
         	int x = (getWidth() - s) / 2;
         	int y = (getHeight() - s) / 2;
 
-        	graphic.setColor(Color.BLACK);
+        	graphic.setColor(this.outline);
         	graphic.drawOval(x, y, s - 1, s - 1);
 	}
 
