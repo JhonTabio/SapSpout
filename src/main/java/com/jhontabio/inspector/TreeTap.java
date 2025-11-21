@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -26,11 +27,16 @@ public class TreeTap extends JFrame
 		setLocationByPlatform(true);
 		setLayout(new BorderLayout());
 
+		// Tree visualization
 		ctp = new CommandTreePanel();
+		JScrollPane scroll = new JScrollPane(ctp);
+
+		// Command input
 		JPanel testPanel = new JPanel();
 		testPanel.add(new JLabel("Hello Swing!", SwingConstants.CENTER), BorderLayout.CENTER);
 
-		JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, ctp, testPanel);
+		// Divide panels
+		JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll, testPanel);
 		split.setDividerLocation(350);
 		split.setResizeWeight(0.3);
 
