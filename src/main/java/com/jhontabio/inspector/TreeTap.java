@@ -1,12 +1,14 @@
 package com.jhontabio.inspector;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
@@ -29,7 +31,10 @@ public class TreeTap extends JFrame
 
 		// Tree visualization
 		ctp = new CommandTreePanel();
+		ctp.setPreferredSize(new Dimension(ctp.getWidth() + 1000, ctp.getHeight() + 1000));
 		JScrollPane scroll = new JScrollPane(ctp);
+		//scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		//scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
 		// Command input
 		JPanel testPanel = new JPanel();
