@@ -31,7 +31,7 @@ public class TreeTap extends JFrame
 
 		// Tree visualization
 		ctp = new CommandTreePanel();
-		ctp.setPreferredSize(new Dimension(ctp.getWidth() + 1000, ctp.getHeight() + 1000));
+		//ctp.setPreferredSize(new Dimension(ctp.getWidth() + 1000, ctp.getHeight() + 1000));
 		JScrollPane scroll = new JScrollPane(ctp);
 		//scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		//scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);

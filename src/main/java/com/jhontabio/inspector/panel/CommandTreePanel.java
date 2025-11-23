@@ -18,7 +18,8 @@ public class CommandTreePanel extends JPanel
 
 	public CommandTreePanel()
 	{
-		super();
+		super(null);
+		setPreferredSize(new Dimension(4000, 4000));
 
 		addMouseListener(new MouseAdapter()
 		{
@@ -68,11 +69,13 @@ public class CommandTreePanel extends JPanel
 		Node v = new Node("Test");
 		v.setBackground(Color.DARK_GRAY);
 		v.setPreferredSize(new Dimension(150, 150));
+		v.setBounds((getPreferredSize().width - v.getPreferredSize().width) / 2, (getPreferredSize().height - v.getPreferredSize().height) / 2, 150, 150);
 		add(v);
 
 		Node v2 = new Node("Another Test");
 		v2.setBackground(Color.DARK_GRAY);
 		v2.setPreferredSize(new Dimension(50, 50));
+		v2.setBounds((getPreferredSize().width - v2.getPreferredSize().width) / 2 + 170, (getPreferredSize().height - v2.getPreferredSize().height) / 2 + 170, 50, 50);
 		add(v2);
 	}
 }
