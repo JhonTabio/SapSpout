@@ -1,7 +1,6 @@
 package com.jhontabio.inspector.panel;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
@@ -10,14 +9,14 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Vertex extends JPanel
+public class Node extends JPanel
 {
 	private Color outline = Color.BLACK;
 
 	private String cmd;
 	private JLabel label;
 
-	public Vertex(String cmd)
+	public Node(String cmd)
 	{
 		this.cmd = cmd;
 

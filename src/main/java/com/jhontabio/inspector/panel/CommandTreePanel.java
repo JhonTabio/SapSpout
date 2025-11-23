@@ -65,12 +65,12 @@ public class CommandTreePanel extends JPanel
 			}
 		});
 
-		Vertex v = new Vertex("Test");
+		Node v = new Node("Test");
 		v.setBackground(Color.DARK_GRAY);
 		v.setPreferredSize(new Dimension(150, 150));
 		add(v);
 
-		Vertex v2 = new Vertex("Another Test");
+		Node v2 = new Node("Another Test");
 		v2.setBackground(Color.DARK_GRAY);
 		v2.setPreferredSize(new Dimension(50, 50));
 		add(v2);
