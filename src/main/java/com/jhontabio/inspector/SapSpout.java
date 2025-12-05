@@ -17,14 +17,14 @@ import javax.swing.WindowConstants;
 
 import com.jhontabio.inspector.panel.CommandTreePanel;
 
-public class TreeTap extends JFrame
+public class SapSpout extends JFrame
 {
 	private final CommandTreePanel ctp;
 	private final JScrollPane scrollPane;
 
-	public TreeTap()
+	public SapSpout()
 	{
-		super("TreeTap - Brigadier Inspector");
+		super("SapSpout - Brigadier Inspector");
 
 		// Configuration
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -56,14 +56,14 @@ public class TreeTap extends JFrame
 		System.out.println("Hello World!");
 
 		SwingUtilities.invokeLater(() -> {
-			TreeTap tt = new TreeTap();
-			tt.setVisible(true);
-			tt.setLocationRelativeTo(null);
+			SapSpout ss = new SapSpout();
+			ss.setVisible(true);
+			ss.setLocationRelativeTo(null);
 
 			SwingUtilities.invokeLater(() -> {
-				JViewport viewport = tt.scrollPane.getViewport();
+				JViewport viewport = ss.scrollPane.getViewport();
 
-				Dimension viewSize = tt.ctp.getPreferredSize();
+				Dimension viewSize = ss.ctp.getPreferredSize();
 				Dimension extentSize = viewport.getExtentSize();
 
 				int x = (viewSize.width - extentSize.width) / 2;
