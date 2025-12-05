@@ -5,6 +5,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,6 +18,9 @@ public class Node extends JPanel
 
 	private String cmd;
 	private JLabel label;
+
+	private Point initialMouseLocation;
+	private Point mouseLocation;
 
 	public Node(String cmd)
 	{
@@ -27,6 +33,34 @@ public class Node extends JPanel
 		label = new JLabel(cmd);
 		label.setName(cmd);
 		add(label, new GridBagConstraints());
+
+		addMouseListener(new MouseAdapter()
+		{
+			public void mousePressed(MouseEvent e)
+			{
+				initialMouseLocation = e.getPoint();
+				mouseLocation = getLocation();
+				System.out.println("Node (" + cmd + ") Clicked @ (" + initialMouseLocation.x + "x" + initialMouseLocation.y + ")");
+				System.out.println("Node (" + cmd + ") Position @ (" + mouseLocation.x + "x" + mouseLocation.y + ")");
+			}
+		});
+
+		addMouseMotionListener(new MouseAdapter()
+		{
+			public void mouseDragged(MouseEvent e)
+			{
+				if(initialMouseLocation == null || mouseLocation == null) return;
+
+				int dx = e.getX() - initialMouseLocation.x;
+				int dy = e.getY() - initialMouseLocation.y;
+
+				mouseLocation = new Point(mouseLocation.x + dx, mouseLocation.y + dy);
+				System.out.println("Node (" + cmd + ") Dragged @ (" + mouseLocation.x + "x" + mouseLocation.y + ")");
+				setLocation(mouseLocation);
+				getParent().repaint();
+
+			}
+		});
 	}
 
 	public void fill(Graphics2D graphic, Color color)
