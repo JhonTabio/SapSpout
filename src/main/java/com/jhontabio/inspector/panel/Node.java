@@ -16,22 +16,22 @@ public class Node extends JPanel
 {
 	private Color outline = Color.BLACK;
 
-	private String cmd;
+	private String label_string;
 	private JLabel label;
 
 	private Point initialMouseLocation;
 	private Point mouseLocation;
 
-	public Node(String cmd)
+	public Node(String label_string)
 	{
-		this.cmd = cmd;
+		this.label_string = label_string;
 
 		setOpaque(false);
 		setLayout(new GridBagLayout());
-		setName(cmd);
+		setName(label_string);
 
-		label = new JLabel(cmd);
-		label.setName(cmd);
+		label = new JLabel(label_string);
+		label.setName(label_string);
 		add(label, new GridBagConstraints());
 
 		addMouseListener(new MouseAdapter()
@@ -40,8 +40,8 @@ public class Node extends JPanel
 			{
 				initialMouseLocation = e.getPoint();
 				mouseLocation = getLocation();
-				System.out.println("Node (" + cmd + ") Clicked @ (" + initialMouseLocation.x + "x" + initialMouseLocation.y + ")");
-				System.out.println("Node (" + cmd + ") Position @ (" + mouseLocation.x + "x" + mouseLocation.y + ")");
+				System.out.println("Node (" + label_string + ") Clicked @ (" + initialMouseLocation.x + "x" + initialMouseLocation.y + ")");
+				System.out.println("Node (" + label_string + ") Position @ (" + mouseLocation.x + "x" + mouseLocation.y + ")");
 			}
 		});
 
@@ -55,7 +55,7 @@ public class Node extends JPanel
 				int dy = e.getY() - initialMouseLocation.y;
 
 				mouseLocation = new Point(mouseLocation.x + dx, mouseLocation.y + dy);
-				System.out.println("Node (" + cmd + ") Dragged @ (" + mouseLocation.x + "x" + mouseLocation.y + ")");
+				System.out.println("Node (" + label_string + ") Dragged @ (" + mouseLocation.x + "x" + mouseLocation.y + ")");
 				setLocation(mouseLocation);
 				getParent().repaint();
 
@@ -83,9 +83,9 @@ public class Node extends JPanel
         	graphic.drawOval(x, y, s - 1, s - 1);
 	}
 
-	public String getCMD()
+	public String getlabel_string()
 	{
-		return cmd;
+		return label_string;
 	}
 
 	@Override
