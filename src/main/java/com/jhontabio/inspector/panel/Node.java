@@ -57,8 +57,7 @@ public class Node extends JPanel
 				mouseLocation = new Point(mouseLocation.x + dx, mouseLocation.y + dy);
 				System.out.println("Node (" + label_string + ") Dragged @ (" + mouseLocation.x + "x" + mouseLocation.y + ")");
 				setLocation(mouseLocation);
-				getParent().repaint();
-
+				//getParent().repaint();
 			}
 		});
 	}

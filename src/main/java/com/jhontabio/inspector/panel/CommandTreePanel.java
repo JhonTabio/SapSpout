@@ -3,16 +3,19 @@ package com.jhontabio.inspector.panel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 import javax.swing.JViewport;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 public class CommandTreePanel extends JPanel
 {
+	private final int fps = 60;
+	long lastTime, nowTime;
+
 	private Point initialMouseLocation;
 
 	public CommandTreePanel()
@@ -64,6 +67,15 @@ public class CommandTreePanel extends JPanel
 				System.out.println("Mouse dragged! " + finalMouseLocation);
 			}
 		});
+
+		lastTime = System.nanoTime();
+		new Timer(0, e -> {
+			nowTime = System.nanoTime();
+			double dt = (nowTime - lastTime) / 1e9;
+
+			lastTime = nowTime;
+			repaint();
+		}).start();
 
 		Node v = new Node("Test");
 		v.setBackground(Color.DARK_GRAY);
