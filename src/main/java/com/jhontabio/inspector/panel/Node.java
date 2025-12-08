@@ -19,10 +19,11 @@ public class Node extends JPanel
 	private String label_string;
 	private JLabel label;
 
+	private double vx, vy, ax, ay;
+	private boolean isDragged = false;
 	private double dragOffsetX, dragOffsetY; // Click offset
-
-	private Point initialMouseLocation;
-	private Point mouseLocation;
+	private long lastDragTime = -1;
+	private double lastDragX, lastDragY;
 
 	public Node(String label_string)
 	{
@@ -40,21 +41,30 @@ public class Node extends JPanel
 		{
 			public void mousePressed(MouseEvent e)
 			{
-				initialMouseLocation = e.getPoint();
-				mouseLocation = getLocation();
-
-				System.out.println("Node (" + label_string + ") Pressed @ (" + initialMouseLocation.x + "x" + initialMouseLocation.y + ")");
-				System.out.println("Node (" + label_string + ") Position @ (" + mouseLocation.x + "x" + mouseLocation.y + ")");
+				isDragged = true;
 
 				dragOffsetX = e.getX();
 				dragOffsetY = e.getY();
+
+				vx = 0;
+				vy = 0;
+
+				lastDragX = getX() + e.getX();
+				lastDragY = getY() + e.getY();
+				lastDragTime = System.nanoTime();
+
+				System.out.println("Node (" + label_string + ") Pressed @ (" + dragOffsetX + "x" + dragOffsetY + ")");
+				System.out.println("Node (" + label_string + ") lastDrag @ (" + lastDragX + "x" + lastDragY + ")");
 			}
 
 			public void mouseReleased(MouseEvent e)
 			{
-				System.out.println("Node (" + label_string + ") Released @ (" + mouseLocation.x + "x" + mouseLocation.y + ")");
-				initialMouseLocation = null;
-				mouseLocation = null;
+				isDragged = false;
+				lastDragTime = -1;
+				System.out.println("Node (" + label_string + ") Released @ (" + lastDragX + "x" + lastDragY + ")");
+
+				vx *= 0.7;
+				vy *= 0.7;
 			}
 		});
 
@@ -62,7 +72,7 @@ public class Node extends JPanel
 		{
 			public void mouseDragged(MouseEvent e)
 			{
-				if(initialMouseLocation == null || mouseLocation == null) return;
+				if(!isDragged) return;
 
 				double panelX = getX() + e.getX();
 				double panelY = getY() + e.getY();
@@ -73,8 +83,36 @@ public class Node extends JPanel
 				setLocation((int) x, (int) y);
 
 				System.out.println("Node (" + label_string + ") Dragged @ (" + x + "x" + y + ")");
+
+				long now = System.nanoTime();
+
+				if(lastDragTime > 0)
+				{
+					double dt = (now - lastDragTime) / 1e9;
+					if(dt > 0)
+					{
+						vx = (panelX - lastDragX) / dt;
+						vy = (panelY - lastDragY) / dt;
+					}
+				}
+				lastDragTime = now;
+				lastDragX = panelX;
+				lastDragY = panelY;
 			}
 		});
+	}
+
+	public void tick(double dt)
+	{
+		if(isDragged) return;
+
+		vx += ax * dt;
+		vy += ay * dt;
+
+		double x = getX() + (vx * dt);
+		double y = getY() + (vy * dt);
+
+		setLocation((int) x, (int) y);
 	}
 
 	public void fill(Graphics2D graphic, Color color)

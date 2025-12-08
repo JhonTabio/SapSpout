@@ -73,15 +73,6 @@ public class CommandTreePanel extends JPanel
 			}
 		});
 
-		lastTime = System.nanoTime();
-		new Timer(1000 / fps, e -> {
-			nowTime = System.nanoTime();
-			double dt = (nowTime - lastTime) / 1e9;
-
-			lastTime = nowTime;
-			repaint();
-		}).start();
-
 		Node v = new Node("Test");
 		v.setBackground(Color.DARK_GRAY);
 		v.setPreferredSize(new Dimension(150, 150));
@@ -93,5 +84,18 @@ public class CommandTreePanel extends JPanel
 		v2.setPreferredSize(new Dimension(50, 50));
 		v2.setBounds((getPreferredSize().width - v2.getPreferredSize().width) / 2 + 170, (getPreferredSize().height - v2.getPreferredSize().height) / 2 + 170, 50, 50);
 		add(v2);
+
+		lastTime = System.nanoTime();
+		new Timer(1000 / fps, e -> {
+			nowTime = System.nanoTime();
+			double dt = (nowTime - lastTime) / 1e9;
+
+			v.tick(dt);
+			v2.tick(dt);
+
+			lastTime = nowTime;
+			repaint();
+		}).start();
+
 	}
 }
