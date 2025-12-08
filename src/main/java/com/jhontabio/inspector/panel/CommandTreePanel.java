@@ -69,7 +69,7 @@ public class CommandTreePanel extends JPanel
 		});
 
 		lastTime = System.nanoTime();
-		new Timer(0, e -> {
+		new Timer(1000 / fps, e -> {
 			nowTime = System.nanoTime();
 			double dt = (nowTime - lastTime) / 1e9;
 
