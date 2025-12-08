@@ -40,8 +40,15 @@ public class Node extends JPanel
 			{
 				initialMouseLocation = e.getPoint();
 				mouseLocation = getLocation();
-				System.out.println("Node (" + label_string + ") Clicked @ (" + initialMouseLocation.x + "x" + initialMouseLocation.y + ")");
+				System.out.println("Node (" + label_string + ") Pressed @ (" + initialMouseLocation.x + "x" + initialMouseLocation.y + ")");
 				System.out.println("Node (" + label_string + ") Position @ (" + mouseLocation.x + "x" + mouseLocation.y + ")");
+			}
+
+			public void mouseReleased(MouseEvent e)
+			{
+				System.out.println("Node (" + label_string + ") Released @ (" + mouseLocation.x + "x" + mouseLocation.y + ")");
+				initialMouseLocation = null;
+				mouseLocation = null;
 			}
 		});
 
@@ -57,7 +64,6 @@ public class Node extends JPanel
 				mouseLocation.translate(dx, dy);
 				System.out.println("Node (" + label_string + ") Dragged @ (" + mouseLocation.x + "x" + mouseLocation.y + ")");
 				setLocation(mouseLocation);
-				//getParent().repaint();
 			}
 		});
 	}

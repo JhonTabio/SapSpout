@@ -28,7 +28,12 @@ public class CommandTreePanel extends JPanel
 			public void mousePressed(MouseEvent e)
 			{
 				initialMouseLocation = e.getPoint();
-				System.out.println("Mouse Pressed! " + initialMouseLocation);
+				System.out.println("Mouse Pressed! (" + initialMouseLocation.x + "x" + initialMouseLocation.y + ")");
+			}
+			public void mouseReleased(MouseEvent e)
+			{
+				System.out.println("Mouse Released! (" + initialMouseLocation.x + "x" + initialMouseLocation.y + ")");
+				initialMouseLocation = null;
 			}
 		});
 
@@ -64,7 +69,7 @@ public class CommandTreePanel extends JPanel
 				viewport.setViewPosition(viewPos);
 
 				Point finalMouseLocation = e.getLocationOnScreen();
-				System.out.println("Mouse dragged! " + finalMouseLocation);
+				System.out.println("Mouse dragged! (" + finalMouseLocation.x + "x" + finalMouseLocation.y + ")");
 			}
 		});
 
