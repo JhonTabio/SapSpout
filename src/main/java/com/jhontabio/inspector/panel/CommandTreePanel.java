@@ -14,7 +14,7 @@ import javax.swing.Timer;
 public class CommandTreePanel extends JPanel
 {
 	private final int fps = 60;
-	long lastTime, nowTime;
+	private long lastTime, nowTime;
 
 	private Point initialMouseLocation;
 
