@@ -19,6 +19,8 @@ public class Node extends JPanel
 	private String label_string;
 	private JLabel label;
 
+	private double dragOffsetX, dragOffsetY; // Click offset
+
 	private Point initialMouseLocation;
 	private Point mouseLocation;
 
@@ -40,8 +42,12 @@ public class Node extends JPanel
 			{
 				initialMouseLocation = e.getPoint();
 				mouseLocation = getLocation();
+
 				System.out.println("Node (" + label_string + ") Pressed @ (" + initialMouseLocation.x + "x" + initialMouseLocation.y + ")");
 				System.out.println("Node (" + label_string + ") Position @ (" + mouseLocation.x + "x" + mouseLocation.y + ")");
+
+				dragOffsetX = e.getX();
+				dragOffsetY = e.getY();
 			}
 
 			public void mouseReleased(MouseEvent e)
@@ -58,12 +64,15 @@ public class Node extends JPanel
 			{
 				if(initialMouseLocation == null || mouseLocation == null) return;
 
-				int dx = e.getX() - initialMouseLocation.x;
-				int dy = e.getY() - initialMouseLocation.y;
+				double panelX = getX() + e.getX();
+				double panelY = getY() + e.getY();
 
-				mouseLocation.translate(dx, dy);
-				System.out.println("Node (" + label_string + ") Dragged @ (" + mouseLocation.x + "x" + mouseLocation.y + ")");
-				setLocation(mouseLocation);
+				double x = panelX - dragOffsetX;
+				double y = panelY - dragOffsetY;
+				
+				setLocation((int) x, (int) y);
+
+				System.out.println("Node (" + label_string + ") Dragged @ (" + x + "x" + y + ")");
 			}
 		});
 	}
