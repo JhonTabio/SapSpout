@@ -19,7 +19,7 @@ public class Node extends JPanel
 	private JLabel label;
 
 	private double friction = 0.9;
-	private double vx, vy, ax, ay;
+	private double vx, vy;
 	private boolean isDragged = false;
 	private double dragOffsetX, dragOffsetY; // Click offset
 	private long lastDragTime = -1;
@@ -111,9 +111,6 @@ public class Node extends JPanel
 
 		vx *= friction;
 		vy *= friction;
-
-		vx += ax * dt;
-		vy += ay * dt;
 
 		double x = getX() + (vx * dt);
 		double y = getY() + (vy * dt);
