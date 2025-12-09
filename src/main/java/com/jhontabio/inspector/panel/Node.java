@@ -18,6 +18,7 @@ public class Node extends JPanel
 	private String label_string;
 	private JLabel label;
 
+	private double friction = 0.9;
 	private double vx, vy, ax, ay;
 	private boolean isDragged = false;
 	private double dragOffsetX, dragOffsetY; // Click offset
@@ -61,9 +62,6 @@ public class Node extends JPanel
 				isDragged = false;
 				lastDragTime = -1;
 				System.out.println("Node (" + label_string + ") Released @ (" + lastDragX + "x" + lastDragY + ")");
-
-				vx *= 0.7;
-				vy *= 0.7;
 			}
 		});
 
@@ -110,6 +108,9 @@ public class Node extends JPanel
 	public void tick(double dt)
 	{
 		if(isDragged) return;
+
+		vx *= friction;
+		vy *= friction;
 
 		vx += ax * dt;
 		vy += ay * dt;
