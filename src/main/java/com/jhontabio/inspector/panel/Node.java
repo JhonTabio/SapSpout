@@ -78,6 +78,12 @@ public class Node extends JPanel
 
 				double x = panelX - dragOffsetX;
 				double y = panelY - dragOffsetY;
+
+
+				if(x > getParent().getWidth()) x = getParent().getWidth();
+				else if(x <= 0) x = 0;
+				if(y > getParent().getHeight()) y = getParent().getHeight();
+				else if(y <= 0) y = 0;
 				
 				setLocation((int) x, (int) y);
 
@@ -110,6 +116,18 @@ public class Node extends JPanel
 
 		double x = getX() + (vx * dt);
 		double y = getY() + (vy * dt);
+
+		if(x > getParent().getWidth() || x <= 0)
+		{
+			vx *= -1;
+			return;
+		}
+
+		if(y > getParent().getHeight() || y <= 0)
+		{
+			vy *= -1;
+			return;
+		}
 
 		setLocation((int) x, (int) y);
 	}
