@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JViewport;
@@ -17,6 +19,8 @@ public class CommandTreePanel extends JPanel
 	private long lastTime, nowTime;
 
 	private Point initialMouseLocation;
+
+	private List<Node> nodes;
 
 	public CommandTreePanel()
 	{
@@ -73,29 +77,31 @@ public class CommandTreePanel extends JPanel
 			}
 		});
 
-		Node v = new Node("Test");
-		v.setBackground(Color.DARK_GRAY);
-		v.setPreferredSize(new Dimension(150, 150));
-		v.setBounds((getPreferredSize().width - v.getPreferredSize().width) / 2, (getPreferredSize().height - v.getPreferredSize().height) / 2, 150, 150);
-		add(v);
+		nodes = new ArrayList<Node>();
 
-		Node v2 = new Node("Another Test");
-		v2.setBackground(Color.DARK_GRAY);
-		v2.setPreferredSize(new Dimension(50, 50));
-		v2.setBounds((getPreferredSize().width - v2.getPreferredSize().width) / 2 + 170, (getPreferredSize().height - v2.getPreferredSize().height) / 2 + 170, 50, 50);
-		add(v2);
+		addNode("Test");
+		addNode("Another Test");
 
 		lastTime = System.nanoTime();
 		new Timer(1000 / fps, e -> {
 			nowTime = System.nanoTime();
 			double dt = (nowTime - lastTime) / 1e9;
 
-			v.tick(dt);
-			v2.tick(dt);
+			for(Node n : nodes) n.tick(dt);
 
 			lastTime = nowTime;
 			repaint();
 		}).start();
 
+	}
+
+	public void addNode(String label)
+	{
+		Node n = new Node(label);
+		n.setBackground(Color.DARK_GRAY);
+		n.setPreferredSize(new Dimension(150, 150));
+		n.setBounds((getPreferredSize().width - n.getPreferredSize().width) / 2, (getPreferredSize().height - n.getPreferredSize().height) / 2, 150, 150);
+		add(n);
+		nodes.add(n);
 	}
 }
