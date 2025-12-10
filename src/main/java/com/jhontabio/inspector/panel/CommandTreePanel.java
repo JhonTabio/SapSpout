@@ -80,7 +80,7 @@ public class CommandTreePanel extends JPanel
 		nodes = new ArrayList<Node>();
 
 		addNode("Test");
-		addNode("Another Test");
+		addNode("Another Test", getPreferredSize().width + 170, getPreferredSize().height + 170, 50, 50);
 
 		lastTime = System.nanoTime();
 		new Timer(1000 / fps, e -> {
@@ -95,13 +95,30 @@ public class CommandTreePanel extends JPanel
 
 	}
 
-	public void addNode(String label)
+	public Node addNode(String label)
+	{
+		return addNode(label, getPreferredSize().width, getPreferredSize().height);
+	}
+
+	public Node addNode(String label, int x, int y)
+	{
+		return addNode(label, x, y, 150, 150);
+	}
+
+	public Node addNode(String label, int x, int y, int width, int height)
+	{
+		return addNode(label, x, y, width, height, Color.DARK_GRAY);
+	}
+
+	public Node addNode(String label, int x, int y, int width, int height, Color color)
 	{
 		Node n = new Node(label);
-		n.setBackground(Color.DARK_GRAY);
-		n.setPreferredSize(new Dimension(150, 150));
-		n.setBounds((getPreferredSize().width - n.getPreferredSize().width) / 2, (getPreferredSize().height - n.getPreferredSize().height) / 2, 150, 150);
+		n.setBackground(color);
+		n.setPreferredSize(new Dimension(width, height));
+		n.setBounds((x - width) / 2, (y - height) / 2, width, height);
 		add(n);
 		nodes.add(n);
+
+		return n;
 	}
 }
