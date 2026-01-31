@@ -15,6 +15,63 @@ import javax.swing.Timer;
 
 public class CommandTreePanel extends JPanel
 {
+	static void resolveCollision(Node a, Node b)
+	{
+		double ra = a.getWidth() / 2.0;
+		double rb = b.getWidth() / 2.0;
+
+		double centerAx = a.getX() + ra;
+		double centerAy = a.getY() + ra;
+
+		double centerBx = b.getX() + rb;
+		double centerBy = b.getY() + rb;
+
+		double ma = Math.max(1e-6, ra * ra);
+		double mb = Math.max(1e-6, rb * rb);
+
+		double dx = centerBx - centerAx;
+		double dy = centerBy - centerAy;
+		double minDist = ra + rb;
+
+		double dist2 = dx * dx + dy * dy;
+		if(dist2 >= minDist * minDist) return;
+
+		double dist = Math.sqrt(dist2);
+
+		double nx = (dist > 1e-9) ? (dx / dist) : 1.0;
+		double ny = (dist > 1e-9) ? (dy / dist) : 0.0;
+
+		double pen = minDist - dist;
+
+		double invMa = 1.0 / ma;
+		double invMb = 1.0 / mb;
+		double invSum = invMa + invMb;
+
+		double moveA = pen * (invMa / invSum);
+		double moveB = pen * (invMb / invSum);
+
+		a.setLocation((int) (a.getX() - (nx * moveA)), (int) (a.getY()- (ny * moveA)));
+		b.setLocation((int) (b.getX()+ (nx * moveB)), (int) (b.getY()  + (ny * moveB)));
+
+		double rvx = b.vx - a.vx;
+		double rvy = b.vy - a.vy;
+		double velNorm = rvx * nx + rvy * ny;
+
+		if(velNorm > 0) return;
+
+		double restitution = 0.9;
+
+		double j = -(1.0 + restitution) * velNorm / invSum;
+
+		double impX = j * nx;
+		double impY = j * ny;
+
+		a.vx -= impX * invMa;
+		a.vy -= impY * invMa;
+		b.vx += impX * invMb;
+		b.vy += impY * invMb;
+	}
+
 	private final int fps = 60;
 	private long lastTime, nowTime;
 
@@ -87,7 +144,16 @@ public class CommandTreePanel extends JPanel
 			nowTime = System.nanoTime();
 			double dt = (nowTime - lastTime) / 1e9;
 
-			for(Node n : nodes) n.tick(dt);
+			for(Node n : nodes) 
+			{
+				n.tick(dt);
+
+				for(Node n2 : nodes)
+				{
+					if(n.equals(n2)) continue;
+					resolveCollision(n, n2);
+				}
+			}
 
 			lastTime = nowTime;
 			repaint();
